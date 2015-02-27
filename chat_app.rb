@@ -53,6 +53,7 @@ class ChatApp < Sinatra::Base
 
   get '/' do
     if !request.websocket?
+      content_type :json
       json {error: 'Not a websocket connection'}
     else
       request.websocket do |ws|
