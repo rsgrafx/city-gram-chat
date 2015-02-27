@@ -1,0 +1,6 @@
+.env
+bin/**/*
+./bin
+.idea/**
+.div/**
+*.rdb
