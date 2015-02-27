@@ -2,6 +2,9 @@ require 'bundler/setup'
 
 Bundler.require
 
+require 'sinatra'
+require 'sinatra/json'
+
 class ChatApp < Sinatra::Base
   
 
