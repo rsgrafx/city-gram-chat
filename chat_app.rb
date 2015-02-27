@@ -14,6 +14,15 @@ class ChatApp < Sinatra::Base
                   'ws://127.0.0.1:9393',
                   'ws://city-gram.herokuapp.com']
 
+  before do
+    ['Connection' => 'Upgrade',
+    # 'Sec-WebSocket-Key2' => '12998 5 Y3 1  .P00',
+    'Sec-WebSocket-Protocol' => 'sample',
+    'Upgrade' => 'WebSocket'].each do |set|
+      headers set 
+    end
+  end
+
   configure :development do
     REDIS = Redis.new
     use Rack::Cors do
@@ -25,16 +34,6 @@ class ChatApp < Sinatra::Base
   end
 
   configure :production do
-
-    before do
-      ['Connection' => 'Upgrade',
-      # 'Sec-WebSocket-Key2' => '12998 5 Y3 1  .P00',
-      'Sec-WebSocket-Protocol' => 'sample',
-      'Upgrade' => 'WebSocket'].each do |set|
-        headers set 
-      end
-    end
-
     require 'redis'
     uri = URI.parse(ENV["REDISTOGO_URL"])
     REDIS = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
