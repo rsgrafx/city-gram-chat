@@ -25,6 +25,16 @@ class ChatApp < Sinatra::Base
   end
 
   configure :production do
+
+    before do
+      ['Connection' => 'Upgrade',
+      # 'Sec-WebSocket-Key2' => '12998 5 Y3 1  .P00',
+      'Sec-WebSocket-Protocol' => 'sample',
+      'Upgrade' => 'WebSocket'].each do |set|
+        headers set 
+      end
+    end
+
     require 'redis'
     uri = URI.parse(ENV["REDISTOGO_URL"])
     REDIS = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
