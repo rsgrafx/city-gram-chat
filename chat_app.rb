@@ -2,11 +2,13 @@ require 'bundler/setup'
 
 Bundler.require
 
-require 'sinatra'
+require 'sinatra/base'
+require 'json'
 require 'sinatra/json'
 
 class ChatApp < Sinatra::Base
-  
+  helpers Sinatra::JSON
+  # city-gram-chat.herokuapp.com
 
   configure :development do
     REDIS = Redis.new
@@ -46,6 +48,7 @@ class ChatApp < Sinatra::Base
   end)
 
   get '/' do
+    content_type :json
     request.websocket do |ws|
       ws.onopen do
         ws.send( {'sender' => 'CityGram', message: 'Give a Shout Out!'}.to_json )
