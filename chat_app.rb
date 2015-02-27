@@ -40,7 +40,7 @@ class ChatApp < Sinatra::Base
 
   set :redis, REDIS
   set(:watcher, Thread.new do
-    redis = Redis.new
+    redis = Redis.new 
     Thread.current['sockets'] = []
     redis.subscribe 'chat_screen' do |on|
       on.message do |channel, message|
@@ -56,7 +56,8 @@ class ChatApp < Sinatra::Base
       content_type :json
       { 'error' => 'Not a websocket connection' }.to_json
     else
-      request.websocket do |ws|
+      begin
+        request.websocket do |ws|
         ws.onopen do
           ws.send( {'sender' => 'CityGram', message: 'Give a Shout Out!'}.to_json )
           settings.watcher['sockets'] << ws
@@ -71,6 +72,9 @@ class ChatApp < Sinatra::Base
           settings.watcher['sockets'].delete(ws)
           # settings.sockets.delete(ws)
         end
+      end
+      rescue => e
+        puts "THIS IS THE ERROR! \n #{e} \n #{request.inspect}"
       end
     end
   end
