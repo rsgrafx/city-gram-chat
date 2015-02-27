@@ -5,6 +5,8 @@ require 'sinatra/base'
 require 'sinatra/json'
 require 'json'
 
+require 'faye'
+
 class ChatApp < Sinatra::Base
   helpers Sinatra::JSON
   # city-gram-chat.herokuapp.com

@@ -6,3 +6,5 @@ gem 'sinatra-contrib'
 gem 'sinatra-websocket'
 gem 'rack-cors', require: 'rack/cors'
 gem 'thin'
+
+gem 'faye'
