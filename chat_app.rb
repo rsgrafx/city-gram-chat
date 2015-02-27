@@ -2,13 +2,12 @@ require 'bundler/setup'
 Bundler.require
 
 require 'sinatra/base'
-require 'json'
 require 'sinatra/json'
+require 'json'
 
 class ChatApp < Sinatra::Base
   helpers Sinatra::JSON
   # city-gram-chat.herokuapp.com
-
   configure :development do
     REDIS = Redis.new
     use Rack::Cors do
@@ -65,5 +64,4 @@ class ChatApp < Sinatra::Base
       end
     end
   end
-
 end
