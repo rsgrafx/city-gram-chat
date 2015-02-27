@@ -38,13 +38,13 @@ class ChatApp < Sinatra::Base
     uri = URI.parse(ENV["REDISTOGO_URL"])
     REDIS = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
 
-    use Rack::Cors do
-      allow do
-        origins *HOST_SOURCES
-                # regular expressions can be used here
-          resource '*'
-        end
-    end
+    # use Rack::Cors do
+    #   allow do
+    #     origins *HOST_SOURCES
+    #             # regular expressions can be used here
+    #       resource '*'
+    #     end
+    # end
   end
 
   set :redis, REDIS
